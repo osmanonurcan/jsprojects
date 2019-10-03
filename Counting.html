@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="https://maeyler.github.io/favicon.ico">
-    <title>xxx </title>
+    <title>Decreasing </title>
 
   <style> /* CSS comment */
     body { max-width: 440px; }
     #inp { width: 50px }
     #out {
         font-size: 18px;
-        background: blue;
+        background: green;
         color: white;
         text-align: center;
         padding: 10px;
@@ -22,10 +22,10 @@
 <body>   <!-- HTML comment: Modify all items marked xxx -->
 
 <h2 id=title>This text is not shown. Why?</h2>
-xxx 
+ Sayi
 <input type=number id=inp value=0 onChange="out.innerText=value">
 &emsp;
-<input type=button value=xxx onClick="increment()">
+<input type=button value=decrease onClick="decreasing()">
 <p id=out>This text is not shown. Why?</p>
 
 <hr />
@@ -40,16 +40,16 @@ xxx
 <script>
 "use strict";
 // JavaScript comment
-function increment() {
-    let c = Number(out.innerText)+1
+function decreasing() {
+    let c = Number(out.innerText)-1
     console.log("counter = "+c);
     out.innerText = c;
 }
     //global variable id is the HTML element with id 
     //const title = document.getElementById("title");
     title.innerText = document.title;
-    sample.innerText = increment.toString();
-    out.innerText = 0; increment();
+    sample.innerText = decreasing.toString();
+    out.innerText = 0; decreasing();
 </script>
 
 </body>
