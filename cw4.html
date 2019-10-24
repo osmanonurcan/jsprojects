@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Course</title>
+</head>
+
+<body>
+    <h1>Course</h1>
+    <p>Course Name:
+        <input type="text" onchange="findCourse(value)">
+    </p>
+    <div id=doki></div>
+
+
+
+
+
+
+
+    <script>
+        let courses = []
+        fetch("https://maeyler.github.io/JS/data/Courses.txt").then(r => r.text()).then(str => str.split('\n'))
+            .then(lines => {
+                lines.forEach(line => {
+                    blocks = line.split('\t')
+                    courses.push(new Course(blocks[0], blocks[1], blocks[2], blocks.slice(3)))
+
+                });
+            })
+
+
+        class Course {
+            constructor(name, time, date, room) {
+                this.name = name
+                this.time = time
+                this.date = date
+                this.room = room
+            }
+
+
+        }
+        function findCourse(name) {
+            name = name.toUpperCase()
+            courses.forEach(c => {
+                if (c.name == name) doki.innerText = "Name: "+c.name + "\n" +"Time: "+ c.time + "\n" +"Date: "+ c.date + "\n" +"Room: "+ c.room.toString()
+            });
+
+
+        }
+    </script>
+</body>
+
+</html>
