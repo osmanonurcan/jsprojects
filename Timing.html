@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="https://maeyler.github.io/favicon.ico">
+    
+    <title>Timing</title>
+
+    <style>
+        body {
+            max-width: 450px;
+        }
+
+        #clock {
+            font-size: 48px;
+            background-color: blue;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="init()">Array vs Map</button>
+
+    <div id="result"></div>
+
+
+    <script>
+        "use strict";
+
+        class Course {
+  constructor(name, time, date) {
+    this.name = name
+    this.time = time
+    this.date = date
+    this.rooms = []
+  }
+  addRooms(...room) {
+    for (let r of room) this.rooms.push(r)
+    return this
+  }
+  toString() {
+    return this.name;
+  }
+}
+
+class Student {
+  constructor(id, name, gpa) {
+    this.id = id
+    this.name = name
+    this.gpa = gpa
+    this.courses = []
+  }
+  addCourses(...course) {
+    for (let c of course) this.courses.push(c)
+    return this
+  }
+  toString() {
+    return this.name +": "+this.gpa;
+  }
+}
+
+
+        let randomID
+        const url = "https://maeyler.github.io/JS/data/"
+        const array = []     // Student ids
+        const map = new Map() // id to student
+        async function readData(file) {
+
+            let data = await fetch(url + file)
+            let text = await data.text()
+            addStudents(text)
+        }
+
+        function parseStudent(line) {
+            let [id, name, gpa, ...L] = line.split('\t')
+            let std = new Student(id, name, gpa)
+            std.courses = L; return std
+        }
+        function addStudents(txt) {
+
+            let a = txt.split('\n')
+
+            for (let s of a) {
+                let std = parseStudent(s)
+                array.push(std.id); map.set(std.id, std);
+            }
+
+        }
+
+        function searchArr() {
+            let foundinArray = 0
+
+            for (let i = 0; i < 10000; i++) {
+
+                if (array.includes(randomID)) {
+                    foundinArray++
+                }
+            }
+            return foundinArray
+
+
+
+        }
+
+        function searchMap() {
+            let foundinMap = 0
+
+            for (let i = 0; i < 10000; i++) {
+
+                if (map.has(randomID)) {
+                    foundinMap++
+                }
+            }
+            return foundinMap
+        }
+
+        function timing(f) {
+
+            let t = performance.now() //more accurate than Date.now()
+            let x = f()
+            t = performance.now() - t
+            let s = f.name + ": " + t.toPrecision(3) + " msec -- count:" + x + '\n'
+            result.innerText += s;
+        }
+
+        readData("Students.txt")
+
+        function init() {
+            result.innerText = ""
+            randomID = Math.floor(Math.random() * 1000000000)
+            timing(searchArr)
+            timing(searchMap)
+            
+           
+        }
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
