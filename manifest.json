@@ -1,11 +1,11 @@
 {
   "name": "BLM305",
-  "start_url": "/305/",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "pink",
   "icons": [
     {
-      "src": "images/icon.png",
+      "src": "icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }
