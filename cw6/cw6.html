@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FileReader</title>
+</head>
+
+<body>
+    <input type="file" multiple name="files" id="file" onchange="findSameFile(files)">
+    <br>
+    <p>Remote File: <a href="https://maeyler.github.io/JS/data/Courses.txt">Course.txt</a></p>
+    <div id="result"></div>
+
+
+    <script>
+        let remoteFile
+        let localFiles = []
+        let sameFiles = []
+        let url = "https://maeyler.github.io/JS/data/Courses.txt"
+
+        async function readFile(file) {
+            return new Promise((resolve, reject) => {
+                let fileReader = new FileReader()
+                fileReader.onload = function () {
+                    resolve(fileReader.result)
+                }
+                fileReader.onerror = function () {
+                    reject(fileReader.error)
+                }
+                fileReader.readAsText(file)
+
+            })
+        }
+
+        async function findSameFile(files) {
+            sameFiles = []
+            localFiles = []
+            localFiles = files
+            for (const file of files) {
+                let r = await readFile(file)
+                if (r == remoteFile) {
+                    sameFiles.push(file)
+                }
+
+            }
+            let fileArray = [...localFiles];
+            result.innerText = `
+            remote file: ${url}
+            Choose files: ${fileArray.length}
+            ${fileArray.map(file => file.name).toString()}
+            Result: ${
+                sameFiles.length == 0 ?
+                `${fileArray.length} checked, all are different`:
+                `${fileArray.length} checked, ${sameFiles[0].name} equals to ${url}`
+            }
+
+        `
+        }
+
+            async function init() {
+                let data = await fetch(url)
+                let remoteFile = await data.text()
+                
+            }
+
+            init()
+    </script>
+</body>
+
+</html>

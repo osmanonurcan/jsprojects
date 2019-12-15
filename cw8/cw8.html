@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Make a Table</title>
+
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+
+        }
+
+        th {
+            background-color: #6495ED;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <h2 id="title"></h2>
+        <table id="tablo"></table>
+    </center>
+
+    <hr>
+    <b>Sample Code</b>
+    <pre id="sample"></pre>
+    <hr>
+
+
+
+    <script>
+
+
+        fetch('data.txt').then((data) => data.text().then((text) => {
+            makeTable(toList(text))
+        }));
+
+
+
+        function toList(str) {
+            function toObject(x) {
+                let b = {}
+                for (let [i, s] of x.split('\t').entries())
+                    b[keys[i]] = (isNaN(s) ? s : Number(s))
+                return b
+            }
+            let [d0, ...data] = str.split('\n')
+            let keys = d0.split('\t')
+            console.log("Keys:", keys)
+            return data.map(toObject)
+        }
+
+
+        function makeTable(data) {
+            let keys = Object.keys(data[0]);
+            let n = keys.length;
+            let m = data.length;
+
+            let row = "<th></th>";
+            for (let j = 1; j <= n; j++)
+                row += "<th>" + keys[j - 1] + "</th>";
+            let text = "<tr>" + row + "</tr>";
+            for (let i = 1; i <= m; i++) {
+                row = "<th>" + i + "</th>";
+                for (let j = 1; j <= n; j++) {
+                    let p = n * (i - 1) + j;
+                    
+                    row += "<td>" + data[i - 1][keys[j - 1]] +  "</td>";
+                }
+                text += "<tr>" + row + "</tr>";
+            }
+            let t = text.length + " chars";
+            console.log("makeTable: " + m + "x" + n + " " + t);
+            tablo.innerHTML = text;
+        }
+        sample.innerText = toList.toString() + "<br>" + makeTable.toString();
+        title.innerHTML = document.title;
+
+
+
+    </script>
+</body>
+
+</html>

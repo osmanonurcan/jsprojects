@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Animation</title>
+    <style>
+        body {
+            background-image: url("space.jpg");
+            
+            background-repeat: repeat-y;
+            max-width: 500px;
+            
+        }
+        #d1{
+           position: relative;
+            top: 500px;
+            left:350px;
+        }
+        #d2{
+            position: relative;
+            left: 250px;
+            top: 0px;
+        }
+        #d3{
+            position: relative;
+            left: 450px;
+            top: 100px;
+        }
+        #ship {
+            position: relative;
+            width: 15%;
+            
+            
+        }
+        #asteroid{
+            width: 10%;
+            position: relative;
+            
+            
+        }
+        #asteroid2{
+            width: 10%;
+            position: relative;
+            
+            
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="d1">
+        <img src="spaceship.png" alt=""   id="ship">
+
+   
+    
+        
+    </div>
+        
+    <div id="d2">
+        <img src="asteroid.png" alt="" id="asteroid">
+    </div>
+    <div id="d3">
+        <img src="asteroid.png" alt="" id="asteroid2">
+    </div>
+    
+
+
+    <script>
+        const t1 = {transform: ["translateY(0px)", "translateY(500px)"]};
+        const t2 = {transform: ["rotate(0deg)", "rotate(360deg)"]};
+        document.getElementById("asteroid").animate(t2,{duration:3000});
+        document.getElementById("d2").animate(t1,{duration:3000});
+        document.getElementById("asteroid2").animate(t2,{duration:3000});
+        document.getElementById("d3").animate(t1,{duration:3000});
+        document.getElementById("d1").animate({transform: ["translateY(0px)", "translateY(-500px)"]},{duration:3000});
+       
+        
+    </script>
+</body>
+
+</html>
