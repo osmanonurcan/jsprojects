@@ -7,9 +7,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        body{
-            max-width: 500px;
+        body {
+            max-width: 480px;
         }
+
         .flex-container {
             display: flex;
             flex-wrap: wrap;
@@ -21,55 +22,110 @@
             width: 100px;
             margin: 10px;
             text-align: center;
-            line-height: 150px;
+            line-height: 100px;
             font-size: 30px;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
-        #time{
+
+        #time {
             text-align: center;
             font-size: 30px;
         }
-        #count{
+
+        #count {
             text-align: center;
             font-size: 30px;
         }
+
+       
+        img{
+            width: 100px;
+            height: 100px;
+            
+        }
+        
     </style>
 </head>
 
 <body>
     <div id="time">Time:20</div>
-  <div class="flex-container">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
-    <div>7</div>
-    <div>8</div>
-    <div>9</div>
-    <div>10</div>
-    <div>11</div>
-    <div>12</div>
-    
-  </div>
-  <div id="count">Count:0</div>
+    <div id="flex" class="flex-container"> </div>
+    <div id="count">Count:0</div>
 
-  <script>
-      let clock = document.getElementById("time")
-      function time(i){
-        clock.innerText=i;
-        console.log(clock.innerText=1)
-      }
-      function setTime(time){
-        if(time==0) clock.innerText = 0;
-        else{
-            clock.innerText = time;
-            time=time-1;
-            setTimeout(setTime(time),1000)
-        } 
-      }
-      
-  </script>
+    <script>
+        const N = 12;
+        let cplusplus = document.createElement("img");
+        cplusplus.src = "cplusplus.png";
+        let java = document.createElement("img");
+        java.src = "java.png";
+        let js = document.createElement("img");
+        js.src = "js.png";
+        let php = document.createElement("img");
+        php.src = "php.png";
+        let python = document.createElement("img");
+        python.src = "python.png";
+        let sql = document.createElement("img");
+        sql.src = "sql.png";
+        
+        let count = 0;
+
+        function timer(n) {
+            setInterval(() => {
+                document.getElementById('time').innerText = 'Time:'+n;
+                n=n-1    
+            }, 1000);
+        }
+        timer(20);
+
+        for (let i = 0; i < N; i++) {
+            let div = document.createElement("div");
+            div.id = i;
+            div.className = "card"
+           
+            div.innerText=i;
+            document.getElementById("flex").appendChild(div);
+            div.style.backgroundColor = 'black';
+            //document.getElementById(i).append(java);
+            //java.style.visibility = 'hidden';
+            div.addEventListener('click', function changeImg() {
+                if (count < 2) {
+                    document.getElementById(i).style.backgroundColor = 'white';
+
+                    document.getElementById(i).style.backgroundImage = 'url(' + cplusplus.src + ')';
+                    
+                    count++;
+                }
+                if(count>=2) {
+                    setTimeout(function name() {
+                        document.getElementById(i).style.backgroundColor = 'white';
+
+                        document.getElementById(i).style.backgroundImage = 'url(' + cplusplus.src + ')';
+                        for (let j = 0; j < N; j++) {
+                            document.getElementById(j).style.backgroundColor = 'black';
+                            document.getElementById(j).style.backgroundImage = "";
+                            count = 0;
+                        }
+                    }, 700);
+
+                }
+
+
+
+
+            });
+
+
+
+
+
+        }
+
+
+
+
+
+    </script>
 
 </body>
 
