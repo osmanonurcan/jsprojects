@@ -38,77 +38,108 @@
             font-size: 30px;
         }
 
-       
-        img{
+
+        img {
             width: 100px;
             height: 100px;
-            
+
         }
-        
     </style>
 </head>
 
 <body>
-    <div id="time">Time:20</div>
+    <div id="time"></div>
     <div id="flex" class="flex-container"> </div>
-    <div id="count">Count:0</div>
+    <div id="count">Count: 0</div>
 
     <script>
         const N = 12;
-        let cplusplus = document.createElement("img");
-        cplusplus.src = "cplusplus.png";
-        let java = document.createElement("img");
-        java.src = "java.png";
-        let js = document.createElement("img");
-        js.src = "js.png";
-        let php = document.createElement("img");
-        php.src = "php.png";
-        let python = document.createElement("img");
-        python.src = "python.png";
-        let sql = document.createElement("img");
-        sql.src = "sql.png";
-        
+
+        const backgrounds = ["cplusplus.png", "java.png", "js.png", "php.png", "python.png", "sql.png", "cplusplus.png", "java.png", "js.png", "php.png", "python.png", "sql.png"];
         let count = 0;
+        let bMap = randomBackground();
 
         function timer(n) {
+            document.getElementById('time').innerText = 'Time: ' + n;
             setInterval(() => {
-                document.getElementById('time').innerText = 'Time:'+n;
-                n=n-1    
+                
+                n = n - 1
+                document.getElementById('time').innerText = 'Time: ' + n;
+                if(n==0) location.reload();
             }, 1000);
+            
         }
         timer(20);
 
+        function randomBackground() {
+
+
+            let temp = backgrounds;
+            let backgroundsMap = new Map();
+            let src = temp.pop();
+            let random = Math.floor(Math.random() * N);
+            while (backgroundsMap.size < 12) {
+                while (backgroundsMap.get(random) == undefined) {
+                    backgroundsMap.set(random, src);
+
+                    src = temp.pop();
+                }
+                random = Math.floor(Math.random() * N);
+
+            }
+            return backgroundsMap;
+
+
+
+        }
+        let foundCards = new Map();
+        let openedCards = new Map();
         for (let i = 0; i < N; i++) {
             let div = document.createElement("div");
             div.id = i;
             div.className = "card"
-           
-            div.innerText=i;
+
+            div.innerText = i;
             document.getElementById("flex").appendChild(div);
             div.style.backgroundColor = 'black';
-            //document.getElementById(i).append(java);
-            //java.style.visibility = 'hidden';
+
             div.addEventListener('click', function changeImg() {
-                if (count < 2) {
+                if (openedCards.size < 2) {
                     document.getElementById(i).style.backgroundColor = 'white';
 
-                    document.getElementById(i).style.backgroundImage = 'url(' + cplusplus.src + ')';
+                    document.getElementById(i).style.backgroundImage = 'url(' + bMap.get(i) + ')';
+                    openedCards.set(i, bMap.get(i));
+
+                }
+                if (openedCards.size >= 2) {
+                    let arrOpenedCards = Array.from(openedCards);
+                    if (arrOpenedCards[0][1] == arrOpenedCards[1][1]) {
+                        arrOpenedCards.forEach(element => {
+                            foundCards.set(element[0], element[1]);
+                            document.getElementById('count').innerText = 'Count: '+(foundCards.size/2); 
+                        });
+                        openedCards.clear();
+                    }
+
+                    else {
+                        setTimeout(function name() {
+                            
+                            
+                            for (var key of openedCards.keys()) {
+                                document.getElementById(key).style.backgroundColor = 'black';
+                                document.getElementById(key).style.backgroundImage = "";
+                                
+                            }
+                            openedCards.clear();
+                        }, 500);
+
+                    }
                     
-                    count++;
-                }
-                if(count>=2) {
-                    setTimeout(function name() {
-                        document.getElementById(i).style.backgroundColor = 'white';
+                    
 
-                        document.getElementById(i).style.backgroundImage = 'url(' + cplusplus.src + ')';
-                        for (let j = 0; j < N; j++) {
-                            document.getElementById(j).style.backgroundColor = 'black';
-                            document.getElementById(j).style.backgroundImage = "";
-                            count = 0;
-                        }
-                    }, 700);
 
                 }
+                
 
 
 
