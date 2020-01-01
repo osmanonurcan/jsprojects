@@ -48,11 +48,15 @@
 </head>
 
 <body>
+    <h1 id="head">Ciftleri Bulma</h1>
     <div id="time"></div>
     <div id="flex" class="flex-container"> </div>
     <div id="count">Count: 0</div>
+    <h1 id="res"></h1>
 
     <script>
+        document.getElementById('head').style.textAlign = 'center';
+        document.getElementById('res').style.textAlign = 'center';
         const N = 12;
 
         const backgrounds = ["cplusplus.png", "java.png", "js.png", "php.png", "python.png", "sql.png", "cplusplus.png", "java.png", "js.png", "php.png", "python.png", "sql.png"];
@@ -116,7 +120,8 @@
                     if (arrOpenedCards[0][1] == arrOpenedCards[1][1]) {
                         arrOpenedCards.forEach(element => {
                             foundCards.set(element[0], element[1]);
-                            document.getElementById('count').innerText = 'Count: '+(foundCards.size/2); 
+                            document.getElementById('count').innerText = 'Count: '+(foundCards.size/2);
+                            if(foundCards.size/2 == 6) document.getElementById('res').innerText = 'Tebrikler'; 
                         });
                         openedCards.clear();
                     }
